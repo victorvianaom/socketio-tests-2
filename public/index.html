@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
     <title>Socket.io Tests 2</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script> <!--//////SOCKETIO-->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -13,5 +13,36 @@
     <input type="text" name="message" placeholder=" Message" />
     <button type="submit">Send</button>
 </form>
+
+<script type="text/javascript">
+    var socket = io() //////SOCKETIO
+
+    function renderMessage(message) {
+        $('.messages').append('<div class="message"><strong>'+ message.author +'</strong>: '+ message.message +'</div>')
+        document.getElementsByName('message')[0].value = ''
+    }
+
+    socket.on('receivedMessage', (message) => {
+        renderMessage(message)
+    })
+
+    $('#chat').submit(function(event) {
+        event.preventDefault();
+
+        var author = $('input[name=username]').val();
+        var message = $('input[name=message]').val();
+
+        if (author.length && message.length) {
+            var messageObj = {
+                 author: author,
+                 message: message
+            }
+
+            renderMessage(messageObj)
+
+            socket.emit('sendMessage', messageObj) //////SOCKETIO
+        }
+    })
+</script>
 </body>
 </html>
