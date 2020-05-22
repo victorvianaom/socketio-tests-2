@@ -22,8 +22,14 @@
         document.getElementsByName('message')[0].value = ''
     }
 
-    socket.on('receivedMessage', (message) => {
-        renderMessage(message)
+    socket.on('previousMessages', (messages) => { //////SOCKETIO
+        for (message of messages) { //////SOCKETIO
+            renderMessage(message) //////SOCKETIO
+        }
+    })
+
+    socket.on('receivedMessage', (message) => { //////SOCKETIO
+        renderMessage(message) //////SOCKETIO
     })
 
     $('#chat').submit(function(event) {

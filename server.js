@@ -23,7 +23,7 @@ let messages = []
 io.on('connection', (socket) => { //////SOCKETIO
     console.log(`> Socket Conectado: ${socket.id}`) //////SOCKETIO
 
-    socket.emit('previuosMessages', messages) //////SOCKETIO
+    socket.emit('previousMessages', messages) //////SOCKETIO
 
     socket.on('sendMessage', (data) => { //////SOCKETIO
         messages.push(data) //////SOCKETIO
